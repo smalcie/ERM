@@ -1,5 +1,34 @@
 import datetime
-from archiveobjects import Copex
+
+
+class Copex:
+    _block_level = 0
+    _indent = ' ' * _block_level * 2
+    _type = ''
+    _alt_operator = ''
+
+    def copexify(self):
+        copex = f'{self._indent}Heading{self._block_level}: {self.stringify(self._type).title()}\n\n'
+        for key, value in self.__dict__.items():
+            operator = '='
+            if not key.startswith('_'):
+                if key == self._alt_operator:
+                    operator = ':='
+                copex += f'{self._indent}  {key} {operator} {self.stringify(self.__getattribute__(key))}\n'
+        return copex
+
+    def stringify(self, value):
+        # takes an object and
+        if isinstance(value, int):
+            return value
+        elif isinstance(value, str) and ' ' not in value:
+            return value
+        elif isinstance(value, str):
+            return f'"{value}"'
+        elif isinstance(value, datetime.datetime):
+            return datetime.datetime.strftime(value, '%d.%m.%Y')
+        else:
+            return value
 
 
 class Attributes(Copex):
@@ -38,7 +67,7 @@ class Attributes(Copex):
 
 class PetroleumWellboreSample(Attributes):
     # Class attributes for petroleum wellbore samples
-    _type = 'petroleum wellbore samples'
+    _type = 'parameters petroleum wellbore samples'
     _fields = {'Box': 'str',
                'Boxes': 'str',
                'Date': 'datetime.datetime',
@@ -82,22 +111,19 @@ def main():
               'Depth_to': '240',
               'Interval': '10',
               'Location': 'over there'}
-    print(params)
     att = PetroleumWellboreSample(params)
-    print(att)
-    att.copexify()
-    # petroleum_report_attribute = {'Report_Number': '1234',
-    #                               'Title': 'This is a report',
-    #                               'Summary': 'Blah Blah Blah .......',
-    #                               'Licence': '38254PEP',
-    #                               'End_Date': datetime.datetime(year=1966, month=1, day=31),
-    #                               'Pages': '25',
-    #                               'Location': 'On the floor',
-    #                               'Notes': 'This is a note about a report',
-    #                               }
-    # pratt = PRatts(petroleum_report_attribute)
-    # # print(pratt)
-    # pratt.serialise()
+    print(att.copexify())
+    petroleum_report_attribute = {'Report_Number': '1234',
+                                  'Title': 'This is a report',
+                                  'Summary': 'Blah Blah Blah .......',
+                                  'Licence': '38254PEP',
+                                  'End_Date': datetime.datetime(year=1966, month=1, day=31),
+                                  'Pages': '25',
+                                  'Location': 'On the floor',
+                                  'Notes': 'This is a note about a report',
+                                  }
+    pratt = PetroleumReport(petroleum_report_attribute)
+    print(pratt.copexify())
 
 
 if __name__ == '__main__':
