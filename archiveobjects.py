@@ -3,7 +3,6 @@ from pathlib import Path
 import datetime
 
 
-
 class ArchiveData:
     # Container for storing archive object class objects
     _block_level = 1
@@ -61,7 +60,6 @@ class ArchiveObjectHeader(Copex):
         return self._parent_folders[archive_object_type]
 
 
-
 class ArchiveObjectItem(Copex):
     # archive object component that stores file info
     _block_level = 3
@@ -73,20 +71,19 @@ class ArchiveObjectItem(Copex):
                       'petroleum wellbore samples': '/data/archive/crown/Petroleum-Sample-Images',
                         }
 
-    def __init__(self, archive_object_type, archive_object_name,
-                 archive_object_file_name, archive='NO', archive_am='online',
+    def __init__(self, type, name, file, archive='NO', archive_am='online',
                  archive_type='disk', data_source='CROWN', storage_company='CROWN',
                  storage_medium='file'):
-        full_file_path = Path(self._archive_paths[archive_object_type]) / archive_object_file_name
-        self.ArchiveRef = full_file_path.__str__()
+        path = Path(self._archive_paths[type]) / file
+        self.ArchiveRef = path.__str__()
         self.Archive = archive
         self.ArchiveAm = archive_am
         self.ArchiveType = archive_type
         self.DataSource = data_source
-        self.FileFmt = full_file_path.suffix[1:].upper()
+        self.FileFmt = path.suffix[1:].upper()
         self.StorageCompany = storage_company
         self.StorageMedium = storage_medium
-        self.Title = archive_object_name
+        self.Title = name
 
 
 class ArchiveObject(Copex):
@@ -123,6 +120,7 @@ class LinkCountry(Copex):
 
     def __init__(self, licence):
         self.ID = licence
+
 
 class LinkLicence(Copex):
     _block_level = 3

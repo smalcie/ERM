@@ -44,26 +44,6 @@ class Attributes(Copex):
             if key in self._fields.keys():
                 setattr(self, key, value)
 
-    # def serialise(self):
-    #     print()
-    #     for key, value in self._fields.items():
-    #         if hasattr(self, key):
-    #             print(f'{key} = {self.to_string(key)}')
-    #     print()
-    #
-    # def to_string(self, name):
-    #     # takes an object and
-    #     if isinstance(getattr(self, name), int):
-    #         return str(getattr(self, name))
-    #     elif isinstance(getattr(self, name), str) and ' ' not in getattr(self, name):
-    #         return getattr(self, name)
-    #     elif isinstance(getattr(self, name), str):
-    #         return f'"{getattr(self, name)}"'
-    #     elif isinstance(getattr(self, name), datetime.date):
-    #         return datetime.datetime.strftime(getattr(self, name), '%d.%m.%Y')
-    #     else:
-    #         return getattr(self, name)
-
 
 class PetroleumWellboreSample(Attributes):
     # Class attributes for petroleum wellbore samples
@@ -97,10 +77,6 @@ class PetroleumReport(Attributes):
                'Notes': 'str',
                }
 
-
-# class MSAtts(Attributes):
-#     # Class attributes for mineral drillhole samples
-#     pass
 
 
 def main():
