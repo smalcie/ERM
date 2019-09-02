@@ -118,8 +118,8 @@ class LinkCountry(Copex):
     _indent = ' ' * _block_level * 2
     _type = 'Link Country'
 
-    def __init__(self, licence):
-        self.ID = licence
+    def __init__(self, country):
+        self.ID = country
 
 
 class LinkLicence(Copex):
